@@ -5,13 +5,19 @@ import org.springframework.security.oauth2.client.web.reactive.function.client.S
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+
+// This class is used to configure the WebClient to use OAuth2 for authentication and authorization.
+
 @Component
 public class Oauth2WebClientConfiguration {
 
     @Bean
-    WebClient webClient(OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager) {
+    WebClient webClient(OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager)
+    {
         ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client = new ServletOAuth2AuthorizedClientExchangeFilterFunction(oAuth2AuthorizedClientManager);
         oauth2Client.setDefaultClientRegistrationId("user-service");
-        return WebClient.builder().apply(oauth2Client.oauth2Configuration()).build();
+        return WebClient.builder()
+                .apply(oauth2Client.oauth2Configuration())
+                .build();
     }
 }
